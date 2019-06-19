@@ -1,6 +1,7 @@
 package com.laine.casimir.sort.algorithm;
 
 import com.laine.casimir.sort.SortListener;
+import com.laine.casimir.sort.util.ArrayHighlights;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -11,6 +12,8 @@ public abstract class SortingAlgorithm implements Runnable {
 
     private final Queue<SortListenerQueueAction> sortListenerQueueActions = new ArrayDeque<>();
     private final Collection<SortListener> sortListeners = new HashSet<>();
+
+    private final ArrayHighlights highlights = new ArrayHighlights();
 
     private int[] array;
 
@@ -46,6 +49,10 @@ public abstract class SortingAlgorithm implements Runnable {
     protected int get(int index) {
         final int value = array[index];
         iterateSortListeners(SortListener::onArrayAccess);
+        highlights.highlight(index, 100);
+        iterateSortListeners(sortListener -> {
+            sortListener.pointersMoved(highlights.getHighlightIndices());
+        });
         return value;
     }
 

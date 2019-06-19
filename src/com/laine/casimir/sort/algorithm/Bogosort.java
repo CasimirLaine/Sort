@@ -11,15 +11,9 @@ public class Bogosort extends SortingAlgorithm {
     @Override
     protected void onSort() {
         sorting = true;
-        final int[] selectedIndices = new int[2];
         while (sorting) {
             boolean inOrder = true;
             for (int index = 0; index < length() - 1; index++) {
-                selectedIndices[0] = index;
-                selectedIndices[1] = index + 1;
-                iterateSortListeners(sortListener -> {
-                    sortListener.pointersMoved(selectedIndices);
-                });
                 if (greater(index, index + 1)) {
                     inOrder = false;
                     break;

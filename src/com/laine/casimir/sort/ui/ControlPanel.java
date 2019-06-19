@@ -59,7 +59,7 @@ public class ControlPanel extends JPanel {
             final GridBagConstraints constraints = new GridBagConstraints();
             constraints.fill = GridBagConstraints.BOTH;
             constraints.gridy = 0;
-            constraints.weightx = 0.5;
+            constraints.weightx = 1;
             constraints.weighty = 1;
             add(arraySizeLabel, constraints);
             add(arraySizeTextField, constraints);
