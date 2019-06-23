@@ -11,12 +11,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 public class SortingPanel extends JComponent implements SortListener {
 
@@ -25,6 +24,8 @@ public class SortingPanel extends JComponent implements SortListener {
     private final Stroke stroke = new BasicStroke(1);
 
     private final SortingSound sortingSound = new SortingSound();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private Future<?> soundTask;
     private boolean soundEnabled = true;
 
     private int[] array;
@@ -119,13 +120,14 @@ public class SortingPanel extends JComponent implements SortListener {
         }
     }
 
-
     @Override
     public void pointersMoved(int[] indices) {
-        sortingSound.playSound();
+        if (soundTask == null || soundTask.isCancelled() || soundTask.isDone()) {
+            soundTask = executorService.submit(sortingSound::playSound);
+        }
         selectedIndices = indices.clone();
-        repaint();
         if (isVisible() && isShowing() && isDisplayable()) {
+            repaint();
             synchronized (LOCK) {
                 try {
                     LOCK.wait();
@@ -143,8 +145,8 @@ public class SortingPanel extends JComponent implements SortListener {
     @Override
     public void indicesValidated(int[] indices) {
         this.validatedIndices = indices.clone();
-        repaint();
         if (isVisible() && isShowing() && isDisplayable()) {
+            repaint();
             synchronized (LOCK) {
                 try {
                     LOCK.wait();

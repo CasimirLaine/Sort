@@ -5,7 +5,6 @@ import com.laine.casimir.sort.algorithm.SortType;
 import com.laine.casimir.sort.algorithm.SortingAlgorithm;
 import com.laine.casimir.sort.model.GenerationSettings;
 import com.laine.casimir.sort.util.ArrayUtils;
-import com.laine.casimir.sort.util.ComponentResizer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

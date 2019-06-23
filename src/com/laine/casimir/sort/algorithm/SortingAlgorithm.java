@@ -56,7 +56,7 @@ public abstract class SortingAlgorithm implements Runnable {
         return value;
     }
 
-    private void set(int index, int value) {
+    protected void set(int index, int value) {
         array[index] = value;
     }
 

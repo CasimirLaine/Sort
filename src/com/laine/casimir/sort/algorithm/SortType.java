@@ -6,6 +6,7 @@ public enum SortType {
     BOGOSORT("Bogosort"),
     INSERTION_SORT("Insertion sort"),
     SELECTION_SORT("Selection sort"),
+    MERGE_SORT("Merge sort")
     ;
 
     private String title;
@@ -26,6 +27,8 @@ public enum SortType {
                 return new InsertionSort();
             case SELECTION_SORT:
                 return new SelectionSort();
+            case MERGE_SORT:
+                return new MergeSort();
             default:
                 return null;
         }

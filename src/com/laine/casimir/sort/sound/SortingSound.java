@@ -20,7 +20,7 @@ public class SortingSound {
                     soundBuffer[0] = (byte) (Math.sin(angle) * 100);
                     sourceDataLine.write(soundBuffer, 0, 1);
                 }
-                sourceDataLine.drain();
+                stopSound();
             }
         }
     }
@@ -29,7 +29,7 @@ public class SortingSound {
         synchronized (LOCK) {
             if (sourceDataLine != null) {
                 sourceDataLine.drain();
-                sourceDataLine.stop();
+                sourceDataLine.flush();
             }
         }
     }
@@ -37,7 +37,15 @@ public class SortingSound {
     public void createSound() {
         synchronized (LOCK) {
             destroySound();
-            final AudioFormat audioFormat = new AudioFormat(44100F, 8, 1, true, false);
+            final AudioFormat audioFormat = new AudioFormat(
+                    AudioFormat.Encoding.PCM_SIGNED,
+                    44100F,
+                    8,
+                    1,
+                    1,
+                    44100F,
+                    false
+            );
             try {
                 sourceDataLine = AudioSystem.getSourceDataLine(audioFormat);
                 sourceDataLine.open();
@@ -52,7 +60,7 @@ public class SortingSound {
         synchronized (LOCK) {
             stopSound();
             if (sourceDataLine != null) {
-                sourceDataLine.flush();
+                sourceDataLine.stop();
                 sourceDataLine.close();
             }
             sourceDataLine = null;

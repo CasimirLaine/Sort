@@ -101,6 +101,11 @@ public class InfoPanel extends JPanel {
         swapsLabel.setText("Swaps: " + swaps);
     }
 
+    public String[] getSwapLogLines() {
+        final String[] lines = swapLog.getText().split("\n");
+        return lines;
+    }
+
     public void appendLineToSwapLog(String text) {
         if (!swapLog.getText().isBlank()) {
             swapLog.append("\n");
