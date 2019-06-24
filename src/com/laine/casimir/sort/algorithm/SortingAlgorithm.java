@@ -13,7 +13,7 @@ public abstract class SortingAlgorithm implements Runnable {
     private final Queue<SortListenerQueueAction> sortListenerQueueActions = new ArrayDeque<>();
     private final Collection<SortListener> sortListeners = new HashSet<>();
 
-    private final ArrayHighlights highlights = new ArrayHighlights();
+    protected final ArrayHighlights highlights = new ArrayHighlights();
 
     private int[] array;
 
@@ -58,6 +58,10 @@ public abstract class SortingAlgorithm implements Runnable {
 
     protected void set(int index, int value) {
         array[index] = value;
+        highlights.highlight(index, 100);
+        iterateSortListeners(sortListener -> {
+            sortListener.pointersMoved(highlights.getHighlightIndices());
+        });
     }
 
     protected void swap(int firstIndex, int secondIndex) {

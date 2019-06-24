@@ -15,7 +15,7 @@ public class SortingSound {
     public void playSound() {
         synchronized (LOCK) {
             if (sourceDataLine != null) {
-                for (int index = (int) (100 * 44100.0 / 1000.0); index < 150 * 44100.0 / 1000.0; index += 2) {
+                for (int index = (int) (300 * 44100.0 / 1000.0); index < 500 * 44100.0 / 1000.0; index += 8) {
                     double angle = index / (44100.0 / 440.0) * 2 * Math.PI;
                     soundBuffer[0] = (byte) (Math.sin(angle) * 100);
                     sourceDataLine.write(soundBuffer, 0, 1);

@@ -2,7 +2,7 @@ package com.laine.casimir.sort.algorithm;
 
 public class BubbleSort extends SortingAlgorithm {
 
-    private boolean optimized;
+    private boolean optimized = true;
 
     private boolean sorting;
 

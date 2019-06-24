@@ -8,8 +8,10 @@ public class MergeSort extends SortingAlgorithm {
     protected void onSort() {
         sorting = true;
         final int[] sortedArray = getSortedArray();
-        for (int index = 0; index < sortedArray.length; index++) {
-            set(index, sortedArray[index]);
+        if (sortedArray != null) {
+            for (int index = 0; index < sortedArray.length; index++) {
+                set(index, sortedArray[index]);
+            }
         }
         if (sorting) {
             startValidationRun();
@@ -29,12 +31,27 @@ public class MergeSort extends SortingAlgorithm {
         if (array.length == 1) {
             return array[0];
         }
+        {
+            int originalArrayIndex = 0;
+            for (int[] nestedArray : array) {
+                for (int value : nestedArray) {
+                    set(originalArrayIndex, value);
+                    originalArrayIndex++;
+                }
+            }
+            iterateSortListeners(sortListener -> {
+                sortListener.pointersMoved(highlights.getHighlightIndices());
+            });
+        }
+        if (!sorting) {
+            return null;
+        }
         final int[][] largerArray = createLargerArrays(array);
         assign(array, largerArray);
         return merge(largerArray);
     }
 
-    private int[][] createLargerArrays(int[][] smallerArrays) {
+    private static int[][] createLargerArrays(int[][] smallerArrays) {
         final int[][] largerArrays = new int[Math.round((float) smallerArrays.length / 2F)][];
         for (int index = 0; index < largerArrays.length; index++) {
             int largeArraySize = smallerArrays[2 * index].length;
@@ -46,16 +63,16 @@ public class MergeSort extends SortingAlgorithm {
         return largerArrays;
     }
 
-    private void assign(int[][] small, int[][] large) {
+    private static void assign(int[][] small, int[][] large) {
         for (int index = 0; index < large.length; index++) {
             final int[] largeArray = large[index];
             final int[] smallStack1 = small[2 * index];
             final int[] smallStack2;
             if (2 * index + 1 < small.length) {
                 smallStack2 = small[2 * index + 1];
-            } else { {
+            } else {
                 smallStack2 = null;
-            }}
+            }
             int smallStackIndex1 = 0;
             int smallStackIndex2 = 0;
             for (int subIndex = 0; subIndex < largeArray.length; subIndex++) {

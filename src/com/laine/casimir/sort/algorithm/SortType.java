@@ -18,9 +18,7 @@ public enum SortType {
     public SortingAlgorithm createSortingAlgorithm() {
         switch (this) {
             case BUBBLE_SORT:
-                final BubbleSort bubbleSort = new BubbleSort();
-                bubbleSort.setOptimized(true);
-                return bubbleSort;
+                return new BubbleSort();
             case BOGOSORT:
                 return new Bogosort();
             case INSERTION_SORT:
