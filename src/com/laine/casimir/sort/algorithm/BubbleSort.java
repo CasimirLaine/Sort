@@ -2,8 +2,6 @@ package com.laine.casimir.sort.algorithm;
 
 public class BubbleSort extends SortingAlgorithm {
 
-    private boolean optimized = true;
-
     private boolean sorting;
 
     @Override
@@ -21,9 +19,7 @@ public class BubbleSort extends SortingAlgorithm {
             if (isSorted) {
                 break;
             }
-            if (optimized) {
-                sortedTail--;
-            }
+            sortedTail--;
         }
         if (sorting) {
             startValidationRun();
@@ -34,9 +30,5 @@ public class BubbleSort extends SortingAlgorithm {
     @Override
     protected void onStop() {
         sorting = false;
-    }
-
-    public void setOptimized(boolean optimized) {
-        this.optimized = optimized;
     }
 }
