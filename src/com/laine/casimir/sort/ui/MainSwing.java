@@ -1,6 +1,7 @@
 package com.laine.casimir.sort.ui;
 
 import com.laine.casimir.sort.SortListener;
+import com.laine.casimir.sort.SortingController;
 import com.laine.casimir.sort.algorithm.SortType;
 import com.laine.casimir.sort.algorithm.SortingAlgorithm;
 import com.laine.casimir.sort.model.GenerationSettings;
@@ -28,6 +29,7 @@ public class MainSwing {
     private final ControlPanel controlPanel = new ControlPanel(generationSettings);
     private final SortingPanel sortingPanel = new SortingPanel();
 
+    private final SortingController sortingController = new SortingController(sortingPanel);
 
     public MainSwing() {
         frame.setTitle("Sort");
@@ -39,7 +41,7 @@ public class MainSwing {
         controlPanel.getStartSortButton().addActionListener(e -> startSort());
         controlPanel.getStopSortButton().addActionListener(e -> stopSort());
         controlPanel.getSoundButton().addActionListener(e -> {
-            sortingPanel.setSoundEnabled(controlPanel.getSoundButton().isSelected());
+            sortingController.setSoundEnabled(controlPanel.getSoundButton().isSelected());
         });
         frame.getContentPane().add(infoPanel, BorderLayout.NORTH);
         frame.getContentPane().add(controlPanel, BorderLayout.SOUTH);
@@ -62,17 +64,17 @@ public class MainSwing {
             infoPanel.setBiggest(ArrayUtils.biggest(array));
             infoPanel.setLowest(ArrayUtils.lowest(array));
         }
-        sortingPanel.setArray(array);
+        sortingController.setArray(array);
     }
 
     public void startSort() {
-        final SortingAlgorithm bubbleSort = SortType.createSortingAlgorithm(
-                controlPanel.getAlgorithmComboBox().getSelectedItem().toString());
         infoPanel.setComparisons(0);
         infoPanel.setArrayAccesses(0);
         infoPanel.setSwaps(0);
         infoPanel.clearSwapLog();
-        bubbleSort.addSortListener(new SortListener() {
+        final SortingAlgorithm sortingAlgorithm = SortType.createSortingAlgorithm(
+                controlPanel.getAlgorithmComboBox().getSelectedItem().toString());
+        sortingAlgorithm.addSortListener(new SortListener() {
 
             private int comparisonCount;
             private int arrayAccessCount;
@@ -99,14 +101,14 @@ public class MainSwing {
 
             @Override
             public void onStopSort() {
-                bubbleSort.removeSortListener(this);
+                sortingAlgorithm.removeSortListener(this);
             }
         });
-        sortingPanel.sort(bubbleSort);
+        sortingController.start(sortingAlgorithm);
     }
 
     public void stopSort() {
-        sortingPanel.stopSort();
+        sortingController.stop();
     }
 
     public static void main(String[] args) {

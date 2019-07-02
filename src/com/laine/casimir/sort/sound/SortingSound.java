@@ -5,27 +5,33 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-public class SortingSound {
+public abstract class SortingSound {
+
+    public static final String GET = "get";
+    public static final String VALIDATE = "validate";
+
+    protected static final double KILOHERTZ = 44.1;
 
     private final Object LOCK = new Object();
 
-    private final byte[] soundBuffer = new byte[1];
     private SourceDataLine sourceDataLine;
 
-    public void playSound() {
+    public final void playSound() {
         synchronized (LOCK) {
+            if (!isAlive()) {
+                System.out.println(getClass() + ": Error: Attempting to play sound before creating it!");
+                return;
+            }
             if (sourceDataLine != null) {
-                for (int index = (int) (300 * 44100.0 / 1000.0); index < 500 * 44100.0 / 1000.0; index += 8) {
-                    double angle = index / (44100.0 / 440.0) * 2 * Math.PI;
-                    soundBuffer[0] = (byte) (Math.sin(angle) * 100);
-                    sourceDataLine.write(soundBuffer, 0, 1);
-                }
+                play(sourceDataLine);
                 stopSound();
             }
         }
     }
 
-    private void stopSound() {
+    protected abstract void play(SourceDataLine sourceDataLine);
+
+    public final void stopSound() {
         synchronized (LOCK) {
             if (sourceDataLine != null) {
                 sourceDataLine.drain();
@@ -34,7 +40,7 @@ public class SortingSound {
         }
     }
 
-    public void createSound() {
+    public final void createSound() {
         synchronized (LOCK) {
             destroySound();
             final AudioFormat audioFormat = new AudioFormat(
@@ -56,7 +62,7 @@ public class SortingSound {
         }
     }
 
-    public void destroySound() {
+    public final void destroySound() {
         synchronized (LOCK) {
             stopSound();
             if (sourceDataLine != null) {
@@ -65,5 +71,9 @@ public class SortingSound {
             }
             sourceDataLine = null;
         }
+    }
+
+    public final boolean isAlive() {
+        return sourceDataLine != null;
     }
 }

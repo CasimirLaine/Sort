@@ -6,7 +6,9 @@ public enum SortType {
     BOGOSORT("Bogosort"),
     INSERTION_SORT("Insertion sort"),
     SELECTION_SORT("Selection sort"),
-    MERGE_SORT("Merge sort")
+    MERGE_SORT("Merge sort"),
+    SHELLSORT("Shellsort"),
+    COCKTAIL_SHAKER_SORT("Cocktail shaker sort")
     ;
 
     private String title;
@@ -27,6 +29,10 @@ public enum SortType {
                 return new SelectionSort();
             case MERGE_SORT:
                 return new MergeSort();
+            case SHELLSORT:
+                return new Shellsort();
+            case COCKTAIL_SHAKER_SORT:
+                return new CocktailShakerSort();
             default:
                 return null;
         }

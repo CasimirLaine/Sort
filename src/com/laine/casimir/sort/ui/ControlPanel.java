@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 import javax.swing.DefaultComboBoxModel;
@@ -50,6 +51,7 @@ public class ControlPanel extends JPanel {
             for (int index = 0; index < algorithmNames.length; index++) {
                 algorithmNames[index] = sortTypes[index].getTitle();
             }
+            Arrays.sort(algorithmNames);
             algorithmComboBox.setModel(new DefaultComboBoxModel<>(algorithmNames));
         }
         final GridBagLayout layout = new GridBagLayout();

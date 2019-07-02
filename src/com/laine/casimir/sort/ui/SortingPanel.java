@@ -1,9 +1,7 @@
 package com.laine.casimir.sort.ui;
 
-import com.laine.casimir.sort.SortListener;
-import com.laine.casimir.sort.algorithm.SortingAlgorithm;
-import com.laine.casimir.sort.sound.SortingSound;
 import com.laine.casimir.sort.util.ArrayUtils;
+import com.laine.casimir.sort.util.MathUtils;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -11,27 +9,19 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.Arrays;
 
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 
-public class SortingPanel extends JComponent implements SortListener {
+public class SortingPanel extends JComponent {
 
-    private final transient Object LOCK = new Object();
+    private final transient Object RENDER_LOCK = new Object();
 
     private final Stroke stroke = new BasicStroke(1);
 
-    private final SortingSound sortingSound = new SortingSound();
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private Future<?> soundTask;
-    private boolean soundEnabled = true;
-
     private int[] array;
     private int biggest;
-    private SortingAlgorithm sortingAlgorithm;
-    private Thread sortingThread;
 
     private int[] selectedIndices;
     private int[] validatedIndices;
@@ -50,65 +40,50 @@ public class SortingPanel extends JComponent implements SortListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        final Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(stroke);
-        g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-        synchronized (LOCK) {
+        synchronized (RENDER_LOCK) {
+            final Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(stroke);
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
             if (array == null || array.length == 0) {
-                LOCK.notifyAll();
+                RENDER_LOCK.notifyAll();
                 return;
             }
             g2d.setColor(Color.WHITE);
-            final double mod;
-            {
-                final double maxWidthOfColumn = (double) getWidth() / (double) array.length;
-                final double surplusWidth = maxWidthOfColumn - Math.floor(maxWidthOfColumn);
-                final double amountOfExtraPixelColumns = Math.floor(surplusWidth * array.length);
-                if (amountOfExtraPixelColumns != 0) {
-                    mod = ((double) array.length / amountOfExtraPixelColumns);
-                } else {
-                    mod = 0;
-                }
-            }
+            final double skipModulo = MathUtils.getSkipModulo(array.length, getWidth());
+            final double extraWidthModulo = MathUtils.getExtraMod(array.length, getWidth());
             for (int index = 0, x = 0; index < array.length; index++) {
+                if (skipModulo != 0 && index % skipModulo < 1) {
+                    continue;
+                }
                 int width = Math.max(getWidth() / array.length, 1);
-                if (mod != 0 && index % mod < 1) {
+                if (skipModulo == 0 && extraWidthModulo != 0 && index % extraWidthModulo < 1) {
                     width++;
                 }
+                final int height;
                 final int value = array[index];
-                final int height = (int) ((double) value / (double) biggest * getHeight());
-                boolean isSelected = false;
-                if (selectedIndices != null) {
-                    for (int selectedIndex : selectedIndices) {
-                        if (index == selectedIndex) {
-                            isSelected = true;
-                        }
-                    }
-                }
-                boolean validated = false;
-                if (validatedIndices != null) {
-                    for (int validatedIndex : validatedIndices) {
-                        if (index == validatedIndex) {
-                            validated = true;
-                        }
-                    }
-                }
-                if (isSelected) {
-                    g2d.setColor(Color.RED);
+                if (biggest == 0) {
+                    height = (int) ((double) value / 1.0 * getHeight());
                 } else {
-                    if (validated) {
-                        g2d.setColor(Color.GREEN);
+                    height = (int) ((double) value / (double) biggest * getHeight());
+                }
+                final boolean selected = isSelected(index);
+                final boolean validated = isValidated(index);
+                if (validated) {
+                    g2d.setColor(Color.GREEN);
+                } else {
+                    if (selected) {
+                        g2d.setColor(Color.RED);
                     } else {
                         g2d.setColor(Color.BLUE);
                     }
                 }
                 g2d.fillRect(x, getHeight() - height, width, height);
-                if (isSelected) {
-                    g2d.setColor(Color.RED);
+                if (validated) {
+                    g2d.setColor(Color.GREEN);
                 } else {
-                    if (validated) {
-                        g2d.setColor(Color.GREEN);
+                    if (selected) {
+                        g2d.setColor(Color.RED);
                     } else {
                         g2d.setColor(Color.WHITE);
                     }
@@ -116,101 +91,42 @@ public class SortingPanel extends JComponent implements SortListener {
                 g2d.drawRect(x, getHeight() - height, width, height);
                 x += width;
             }
-            LOCK.notifyAll();
+            RENDER_LOCK.notifyAll();
         }
     }
 
-    @Override
-    public void pointersMoved(int[] indices) {
-        if (soundTask == null || soundTask.isCancelled() || soundTask.isDone()) {
-            soundTask = executorService.submit(sortingSound::playSound);
-        }
-        selectedIndices = indices.clone();
-        if (isVisible() && isShowing() && isDisplayable()) {
+    public void repaintAndWait() {
+        synchronized (RENDER_LOCK) {
             repaint();
-            synchronized (LOCK) {
+            if (!SwingUtilities.isEventDispatchThread()) {
                 try {
-                    LOCK.wait();
+                    RENDER_LOCK.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-    }
-
-    @Override
-    public void itemsSwapped(int fromIndex, int toIndex) {
-    }
-
-    @Override
-    public void indicesValidated(int[] indices) {
-        this.validatedIndices = indices.clone();
-        if (isVisible() && isShowing() && isDisplayable()) {
-            repaint();
-            synchronized (LOCK) {
-                try {
-                    LOCK.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onStartSort() {
-        if (soundEnabled) {
-            sortingSound.createSound();
-        }
-        this.selectedIndices = null;
-        this.validatedIndices = null;
-        repaint();
-    }
-
-    @Override
-    public void onStopSort() {
-        stopSort();
-        repaint();
     }
 
     public void setArray(int[] array) {
-        if (sortingThread != null && sortingThread.isAlive()) {
-            return;
-        }
-        this.selectedIndices = null;
-        this.validatedIndices = null;
+        setSelectedIndices(null);
+        setValidatedIndices(null);
         this.array = array;
         updateBiggest();
-        repaint();
+        repaintAndWait();
     }
 
-    public void sort(SortingAlgorithm sortingAlgorithm) {
-        this.sortingAlgorithm = sortingAlgorithm;
-        sortingAlgorithm.addSortListener(this);
-        sortingAlgorithm.setArray(array);
-        if (sortingThread == null || !sortingThread.isAlive()) {
-            sortingThread = new Thread(sortingAlgorithm);
-            sortingThread.start();
+    public void setSelectedIndices(int[] selectedIndices) {
+        this.selectedIndices = selectedIndices;
+        if (this.selectedIndices != null) {
+            Arrays.sort(this.selectedIndices);
         }
-        repaint();
     }
 
-    public void stopSort() {
-        if (sortingAlgorithm != null) {
-            sortingAlgorithm.stop();
-            sortingAlgorithm.removeSortListener(this);
-        }
-        sortingSound.destroySound();
-        sortingThread = null;
-        sortingAlgorithm = null;
-    }
-
-    public void setSoundEnabled(boolean soundEnabled) {
-        this.soundEnabled = soundEnabled;
-        if (soundEnabled) {
-            sortingSound.createSound();
-        } else {
-            sortingSound.destroySound();
+    public void setValidatedIndices(int[] validatedIndices) {
+        this.validatedIndices = validatedIndices;
+        if (this.validatedIndices != null) {
+            Arrays.sort(this.validatedIndices);
         }
     }
 
@@ -220,5 +136,19 @@ public class SortingPanel extends JComponent implements SortListener {
         } else {
             biggest = ArrayUtils.biggest(array);
         }
+    }
+
+    private boolean isSelected(int index) {
+        if (this.selectedIndices != null) {
+            return Arrays.binarySearch(this.selectedIndices, index) >= 0;
+        }
+        return false;
+    }
+
+    private boolean isValidated(int index) {
+        if (this.validatedIndices != null) {
+            return Arrays.binarySearch(this.validatedIndices, index) >= 0;
+        }
+        return false;
     }
 }
