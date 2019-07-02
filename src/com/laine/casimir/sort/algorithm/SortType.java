@@ -8,7 +8,8 @@ public enum SortType {
     SELECTION_SORT("Selection sort"),
     MERGE_SORT("Merge sort"),
     SHELLSORT("Shellsort"),
-    COCKTAIL_SHAKER_SORT("Cocktail shaker sort")
+    COCKTAIL_SHAKER_SORT("Cocktail shaker sort"),
+    ODD_EVENT_SORT("Odd-even sort")
     ;
 
     private String title;
@@ -33,6 +34,8 @@ public enum SortType {
                 return new Shellsort();
             case COCKTAIL_SHAKER_SORT:
                 return new CocktailShakerSort();
+            case ODD_EVENT_SORT:
+                return new OddEvenSort();
             default:
                 return null;
         }
