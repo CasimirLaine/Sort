@@ -6,11 +6,8 @@ public class CocktailShakerSort extends SortingAlgorithm {
     protected void onSort() {
         int startIndex = 0;
         int endIndex = length();
-        while (isSorting()) {
+        while (true) {
             for (int index = startIndex; index < endIndex - 1; index++) {
-                if (!isSorting()) {
-                    break;
-                }
                 if (greater(index, index + 1)) {
                     swap(index + 1, index);
                 }
@@ -20,9 +17,6 @@ public class CocktailShakerSort extends SortingAlgorithm {
                 break;
             }
             for (int index = endIndex - 1; index >= startIndex; index--) {
-                if (!isSorting()) {
-                    break;
-                }
                 if (greater(index, index + 1)) {
                     swap(index + 1, index);
                 }

@@ -5,7 +5,7 @@ public class BubbleSort extends SortingAlgorithm {
     @Override
     protected void onSort() {
         int sortedTail = length();
-        while (isSorting()) {
+        while (true) {
             boolean isSorted = true;
             for (int index = 0; index + 1 < sortedTail; index++) {
                 if (greater(index, index + 1)) {

@@ -5,9 +5,6 @@ public class SelectionSort extends SortingAlgorithm {
     @Override
     protected void onSort() {
         for (int targetIndex = 0; targetIndex < length() - 1; targetIndex++) {
-            if (!isSorting()) {
-                break;
-            }
             int lowestIndex = targetIndex;
             Integer lowestValue = null;
             for (int index = targetIndex; index < length(); index++) {

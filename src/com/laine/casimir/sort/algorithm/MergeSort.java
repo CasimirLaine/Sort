@@ -36,9 +36,6 @@ public class MergeSort extends SortingAlgorithm {
                 sortListener.pointersMoved(highlights.getHighlightIndices());
             });
         }
-        if (!isSorting()) {
-            return null;
-        }
         final int[][] largerArray = createLargerArrays(array);
         assign(array, largerArray);
         return merge(largerArray);

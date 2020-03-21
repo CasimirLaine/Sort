@@ -51,6 +51,9 @@ public abstract class SortingAlgorithm implements Runnable {
     }
 
     protected int get(int index) {
+        if (!isSorting()) {
+            throw new IllegalStateException();
+        }
         final int value = array[index];
         iterateSortListeners(SortListener::onArrayAccess);
         highlights.highlight(index, 100);

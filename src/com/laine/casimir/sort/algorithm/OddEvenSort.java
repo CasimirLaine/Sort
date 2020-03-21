@@ -5,7 +5,7 @@ public class OddEvenSort extends SortingAlgorithm {
     @Override
     protected void onSort() {
         int offset = 0;
-        while (isSorting()) {
+        while (true) {
             boolean isSorted = true;
             for (int index = offset; index + 1 < length(); index += 2) {
                 if (greater(index, index + 1)) {

@@ -8,7 +8,7 @@ public class Bogosort extends SortingAlgorithm {
 
     @Override
     protected void onSort() {
-        while (isSorting()) {
+        while (true) {
             boolean inOrder = true;
             for (int index = 0; index < length() - 1; index++) {
                 if (greater(index, index + 1)) {

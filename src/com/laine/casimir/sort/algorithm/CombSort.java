@@ -8,7 +8,7 @@ public class CombSort extends SortingAlgorithm {
     protected void onSort() {
         int sortedTail = length();
         int gap = length();
-        while (isSorting()) {
+        while (true) {
             boolean isSorted = gap == 1;
             for (int index = 0; index + gap < sortedTail; index++) {
                 if (greater(index, index + gap)) {

@@ -5,9 +5,6 @@ public class InsertionSort extends SortingAlgorithm {
     @Override
     protected void onSort() {
         for (int index = 0; index < length(); index++) {
-            if (!isSorting()) {
-                break;
-            }
             if (index != 0) {
                 for (int subIndex = index; subIndex > 0; subIndex--) {
                     if (greater(subIndex - 1, subIndex)) {
