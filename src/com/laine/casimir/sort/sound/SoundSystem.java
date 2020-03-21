@@ -26,11 +26,20 @@ public final class SoundSystem {
     }
 
     public void playSound(String key) {
+        playSound(key, null);
+    }
+
+    public void playSound(String key, Runnable afterPlay) {
         if (soundEnabled) {
             final Future<?> currentTask = soundTasks.get(key);
             if (currentTask == null || currentTask.isCancelled() || currentTask.isDone()) {
                 final SortingSound sortingSound = soundMap.get(key);
-                soundTasks.put(key, executorService.submit(sortingSound::playSound));
+                soundTasks.put(key, executorService.submit(() -> {
+                    sortingSound.playSound();
+                    if (afterPlay != null) {
+                        afterPlay.run();
+                    }
+                }));
             }
         }
     }

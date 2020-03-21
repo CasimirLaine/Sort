@@ -4,6 +4,7 @@ import com.laine.casimir.sort.algorithm.SortingAlgorithm;
 import com.laine.casimir.sort.sound.ArrayAccessSound;
 import com.laine.casimir.sort.sound.SortingSound;
 import com.laine.casimir.sort.sound.SoundSystem;
+import com.laine.casimir.sort.sound.ValidateSound;
 import com.laine.casimir.sort.ui.SortingPanel;
 
 import java.util.concurrent.ExecutorService;
@@ -52,7 +53,7 @@ public class SortingController implements SortListener {
     public SortingController(SortingPanel sortingPanel) {
         this.sortingPanel = sortingPanel;
         soundSystem.mapSound(SortingSound.GET, new ArrayAccessSound());
-        soundSystem.mapSound(SortingSound.VALIDATE, new ArrayAccessSound());
+        soundSystem.mapSound(SortingSound.VALIDATE, new ValidateSound());
     }
 
     public void start(SortingAlgorithm sortingAlgorithm) {
