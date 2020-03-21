@@ -2,13 +2,10 @@ package com.laine.casimir.sort.algorithm;
 
 public class InsertionSort extends SortingAlgorithm {
 
-    private boolean sorting;
-
     @Override
     protected void onSort() {
-        sorting = true;
         for (int index = 0; index < length(); index++) {
-            if (!sorting) {
+            if (!isSorting()) {
                 break;
             }
             if (index != 0) {
@@ -21,11 +18,9 @@ public class InsertionSort extends SortingAlgorithm {
                 }
             }
         }
-        sorting = false;
     }
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 }

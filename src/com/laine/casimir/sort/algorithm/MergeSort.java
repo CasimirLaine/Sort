@@ -2,18 +2,14 @@ package com.laine.casimir.sort.algorithm;
 
 public class MergeSort extends SortingAlgorithm {
 
-    private boolean sorting;
-
     @Override
     protected void onSort() {
-        sorting = true;
         final int[] sortedArray = getSortedArray();
         if (sortedArray != null) {
             for (int index = 0; index < sortedArray.length; index++) {
                 set(index, sortedArray[index]);
             }
         }
-        sorting = false;
     }
 
     private int[] getSortedArray() {
@@ -40,7 +36,7 @@ public class MergeSort extends SortingAlgorithm {
                 sortListener.pointersMoved(highlights.getHighlightIndices());
             });
         }
-        if (!sorting) {
+        if (!isSorting()) {
             return null;
         }
         final int[][] largerArray = createLargerArrays(array);
@@ -100,6 +96,5 @@ public class MergeSort extends SortingAlgorithm {
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 }

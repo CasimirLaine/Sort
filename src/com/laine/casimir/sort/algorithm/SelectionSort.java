@@ -2,13 +2,10 @@ package com.laine.casimir.sort.algorithm;
 
 public class SelectionSort extends SortingAlgorithm {
 
-    private boolean sorting;
-
     @Override
     protected void onSort() {
-        sorting = true;
         for (int targetIndex = 0; targetIndex < length() - 1; targetIndex++) {
-            if (!sorting) {
+            if (!isSorting()) {
                 break;
             }
             int lowestIndex = targetIndex;
@@ -24,11 +21,9 @@ public class SelectionSort extends SortingAlgorithm {
                 swap(lowestIndex, targetIndex);
             }
         }
-        sorting = false;
     }
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 }

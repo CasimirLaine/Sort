@@ -2,16 +2,13 @@ package com.laine.casimir.sort.algorithm;
 
 public class CocktailShakerSort extends SortingAlgorithm {
 
-    private boolean sorting;
-
     @Override
     protected void onSort() {
-        sorting = true;
         int startIndex = 0;
         int endIndex = length();
-        while (sorting) {
+        while (isSorting()) {
             for (int index = startIndex; index < endIndex - 1; index++) {
-                if (!sorting) {
+                if (!isSorting()) {
                     break;
                 }
                 if (greater(index, index + 1)) {
@@ -23,7 +20,7 @@ public class CocktailShakerSort extends SortingAlgorithm {
                 break;
             }
             for (int index = endIndex - 1; index >= startIndex; index--) {
-                if (!sorting) {
+                if (!isSorting()) {
                     break;
                 }
                 if (greater(index, index + 1)) {
@@ -35,11 +32,9 @@ public class CocktailShakerSort extends SortingAlgorithm {
                 break;
             }
         }
-        sorting = false;
     }
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 }

@@ -6,12 +6,9 @@ public class Bogosort extends SortingAlgorithm {
 
     private final Random random = new Random();
 
-    private boolean sorting;
-
     @Override
     protected void onSort() {
-        sorting = true;
-        while (sorting) {
+        while (isSorting()) {
             boolean inOrder = true;
             for (int index = 0; index < length() - 1; index++) {
                 if (greater(index, index + 1)) {
@@ -24,12 +21,10 @@ public class Bogosort extends SortingAlgorithm {
             }
             shuffle();
         }
-        sorting = false;
     }
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 
     private void shuffle() {

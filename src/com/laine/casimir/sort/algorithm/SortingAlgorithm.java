@@ -14,7 +14,7 @@ public abstract class SortingAlgorithm implements Runnable {
 
     private int[] array;
 
-    private boolean running = false;
+    private boolean sorting = false;
 
     protected abstract void onSort();
 
@@ -24,17 +24,17 @@ public abstract class SortingAlgorithm implements Runnable {
         if (!isArraySet() || length() == 0) {
             return;
         }
-        running = true;
+        sorting = true;
         iterateSortListeners(SortListener::onStartSort);
         onSort();
-        if (running) {
+        if (sorting) {
             startValidationRun();
         }
         iterateSortListeners(SortListener::onStopSort);
     }
 
     public final void stop() {
-        running = false;
+        sorting = false;
         onStop();
     }
 
@@ -156,6 +156,10 @@ public abstract class SortingAlgorithm implements Runnable {
     @Override
     public void run() {
         sort();
+    }
+
+    public final boolean isSorting() {
+        return sorting;
     }
 
     @FunctionalInterface

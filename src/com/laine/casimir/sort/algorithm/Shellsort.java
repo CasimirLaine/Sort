@@ -4,14 +4,11 @@ import java.util.function.Function;
 
 public class Shellsort extends SortingAlgorithm {
 
-    private boolean sorting;
-
     private int initialGapIndex = 5;
     private Function<Integer, Integer> concreteGapFunction;
 
     @Override
     protected void onSort() {
-        sorting = true;
         for (int concreteGapIndex = initialGapIndex; concreteGapIndex > 0; concreteGapIndex--) {
             final int concreteGap = calculateConcreteGap(concreteGapIndex);
             for (int index = 0; index < length(); index++) {
@@ -21,7 +18,6 @@ public class Shellsort extends SortingAlgorithm {
                 insertionSort(index, concreteGap);
             }
         }
-        sorting = false;
     }
 
     private void insertionSort(int startingIndex, int concreteGap) {
@@ -38,7 +34,6 @@ public class Shellsort extends SortingAlgorithm {
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 
     public void setInitialGapIndex(int initialGapIndex) {

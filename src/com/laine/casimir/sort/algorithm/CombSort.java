@@ -4,14 +4,11 @@ public class CombSort extends SortingAlgorithm {
 
     private double shrinkFactor = 1.3;
 
-    private boolean sorting;
-
     @Override
     protected void onSort() {
-        sorting = true;
         int sortedTail = length();
         int gap = length();
-        while (sorting) {
+        while (isSorting()) {
             boolean isSorted = gap == 1;
             for (int index = 0; index + gap < sortedTail; index++) {
                 if (greater(index, index + gap)) {
@@ -27,12 +24,10 @@ public class CombSort extends SortingAlgorithm {
             }
             gap = (int) Math.max(gap / shrinkFactor, 1);
         }
-        sorting = false;
     }
 
     @Override
     protected void onStop() {
-        sorting = false;
     }
 
     public void setShrinkFactor(double shrinkFactor) {
