@@ -21,9 +21,6 @@ public class Shellsort extends SortingAlgorithm {
                 insertionSort(index, concreteGap);
             }
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

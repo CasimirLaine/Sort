@@ -21,9 +21,6 @@ public class BubbleSort extends SortingAlgorithm {
             }
             sortedTail--;
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

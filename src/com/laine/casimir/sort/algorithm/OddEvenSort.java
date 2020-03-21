@@ -21,9 +21,6 @@ public class OddEvenSort extends SortingAlgorithm {
             }
             offset ^= 1;
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

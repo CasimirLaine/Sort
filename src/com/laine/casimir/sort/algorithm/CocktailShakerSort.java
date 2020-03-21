@@ -35,9 +35,6 @@ public class CocktailShakerSort extends SortingAlgorithm {
                 break;
             }
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

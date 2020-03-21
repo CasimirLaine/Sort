@@ -32,9 +32,9 @@ public class MainSwing {
     private final SortingController sortingController = new SortingController(sortingPanel);
 
     public MainSwing() {
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Sort");
         frame.getContentPane().setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT));
         frame.setMinimumSize(new Dimension(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT));
         controlPanel.getRefreshDataButton().addActionListener(e -> refreshData());

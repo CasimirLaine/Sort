@@ -21,9 +21,6 @@ public class InsertionSort extends SortingAlgorithm {
                 }
             }
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

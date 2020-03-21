@@ -3,10 +3,7 @@ package com.laine.casimir.sort.algorithm;
 import com.laine.casimir.sort.SortListener;
 import com.laine.casimir.sort.util.ArrayHighlights;
 
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Queue;
+import java.util.*;
 
 public abstract class SortingAlgorithm implements Runnable {
 
@@ -17,6 +14,8 @@ public abstract class SortingAlgorithm implements Runnable {
 
     private int[] array;
 
+    private boolean running = false;
+
     protected abstract void onSort();
 
     protected abstract void onStop();
@@ -25,12 +24,17 @@ public abstract class SortingAlgorithm implements Runnable {
         if (!isArraySet() || length() == 0) {
             return;
         }
+        running = true;
         iterateSortListeners(SortListener::onStartSort);
         onSort();
+        if (running) {
+            startValidationRun();
+        }
         iterateSortListeners(SortListener::onStopSort);
     }
 
     public final void stop() {
+        running = false;
         onStop();
     }
 
@@ -75,9 +79,7 @@ public abstract class SortingAlgorithm implements Runnable {
 
     protected void startValidationRun() {
         final int[] validatedIndices = new int[length()];
-        for (int index = 0; index < validatedIndices.length; index++) {
-            validatedIndices[index] = -1;
-        }
+        Arrays.fill(validatedIndices, -1);
         final int[] selectedIndices = new int[1];
         for (int index = 0; index < length(); index++) {
             selectedIndices[0] = index;

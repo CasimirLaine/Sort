@@ -27,9 +27,6 @@ public class CombSort extends SortingAlgorithm {
             }
             gap = (int) Math.max(gap / shrinkFactor, 1);
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

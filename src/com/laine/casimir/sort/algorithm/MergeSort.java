@@ -13,9 +13,6 @@ public class MergeSort extends SortingAlgorithm {
                 set(index, sortedArray[index]);
             }
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

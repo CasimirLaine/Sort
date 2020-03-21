@@ -24,9 +24,6 @@ public class SelectionSort extends SortingAlgorithm {
                 swap(lowestIndex, targetIndex);
             }
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 

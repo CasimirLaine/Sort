@@ -24,9 +24,6 @@ public class Bogosort extends SortingAlgorithm {
             }
             shuffle();
         }
-        if (sorting) {
-            startValidationRun();
-        }
         sorting = false;
     }
 
