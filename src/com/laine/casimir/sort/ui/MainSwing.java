@@ -37,6 +37,7 @@ public class MainSwing {
         frame.getContentPane().setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT));
         frame.setMinimumSize(new Dimension(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT));
+        controlPanel.getStopSortButton().setEnabled(false);
         controlPanel.getRefreshDataButton().addActionListener(e -> refreshData());
         controlPanel.getStartSortButton().addActionListener(e -> startSort());
         controlPanel.getStopSortButton().addActionListener(e -> stopSort());
@@ -101,6 +102,7 @@ public class MainSwing {
             public void onStartSort() {
                 controlPanel.getStartSortButton().setEnabled(false);
                 controlPanel.getRefreshDataButton().setEnabled(false);
+                controlPanel.getStopSortButton().setEnabled(true);
             }
 
             @Override
@@ -108,6 +110,7 @@ public class MainSwing {
                 sortingAlgorithm.removeSortListener(this);
                 controlPanel.getStartSortButton().setEnabled(true);
                 controlPanel.getRefreshDataButton().setEnabled(true);
+                controlPanel.getStopSortButton().setEnabled(false);
             }
         });
         sortingController.start(sortingAlgorithm);

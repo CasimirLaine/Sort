@@ -67,6 +67,9 @@ public class SortingController implements SortListener {
     }
 
     public void stop() {
+        if (sortingAlgorithm == null) {
+            return;
+        }
         sortingAlgorithm.stop();
         sortingAlgorithm.removeSortListener(sortListener);
         if (sortingTask != null) {
@@ -74,6 +77,7 @@ public class SortingController implements SortListener {
         }
         sortingTask = null;
         soundSystem.stopAllSounds();
+        sortingAlgorithm = null;
     }
 
     public void setSoundEnabled(boolean soundEnabled) {
