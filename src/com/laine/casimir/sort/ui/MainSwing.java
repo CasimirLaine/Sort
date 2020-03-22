@@ -71,7 +71,6 @@ public class MainSwing {
         infoPanel.setComparisons(0);
         infoPanel.setArrayAccesses(0);
         infoPanel.setSwaps(0);
-        infoPanel.clearSwapLog();
         final SortingAlgorithm sortingAlgorithm = SortType.createSortingAlgorithm(
                 controlPanel.getAlgorithmComboBox().getSelectedItem().toString());
         sortingAlgorithm.addSortListener(new SortListener() {
@@ -82,7 +81,6 @@ public class MainSwing {
 
             @Override
             public void itemsSwapped(int fromIndex, int toIndex) {
-                infoPanel.appendLineToSwapLog(fromIndex + " <-> " + toIndex);
                 swapCount++;
                 infoPanel.setSwaps(swapCount);
             }
@@ -100,8 +98,16 @@ public class MainSwing {
             }
 
             @Override
+            public void onStartSort() {
+                controlPanel.getStartSortButton().setEnabled(false);
+                controlPanel.getRefreshDataButton().setEnabled(false);
+            }
+
+            @Override
             public void onStopSort() {
                 sortingAlgorithm.removeSortListener(this);
+                controlPanel.getStartSortButton().setEnabled(true);
+                controlPanel.getRefreshDataButton().setEnabled(true);
             }
         });
         sortingController.start(sortingAlgorithm);

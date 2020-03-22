@@ -1,15 +1,8 @@
 package com.laine.casimir.sort.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class InfoPanel extends JPanel {
 
@@ -20,9 +13,6 @@ public class InfoPanel extends JPanel {
     private final JLabel arrayAccessesLabel = new JLabel("Array accesses: -");
     private final JLabel comparisonsLabel = new JLabel("Comparisons: -");
     private final JLabel swapsLabel = new JLabel("Swaps: -");
-
-    private final JTextArea swapLog = new JTextArea();
-    private final JScrollPane swapLogScrollPane = new JScrollPane(swapLog);
 
     public InfoPanel() {
         setPreferredSize(new Dimension(0, 100));
@@ -47,18 +37,6 @@ public class InfoPanel extends JPanel {
             algorithmInfoPanel.add(swapsLabel);
             algorithmInfoPanel.add(Box.createHorizontalStrut(0));
             add(algorithmInfoPanel);
-        }
-        {
-            swapLog.setLineWrap(true);
-            swapLog.setWrapStyleWord(true);
-            swapLog.setEditable(false);
-            swapLog.setBackground(Color.BLACK);
-            swapLog.setForeground(Color.WHITE);
-            final JPanel swapLogPanel = new JPanel();
-            swapLogPanel.setLayout(new BoxLayout(swapLogPanel, BoxLayout.Y_AXIS));
-            swapLogPanel.setBorder(new TitledBorder("Swap log"));
-            swapLogPanel.add(swapLogScrollPane);
-            add(swapLogPanel);
         }
         clearArraySize();
         clearBiggest();
@@ -99,22 +77,5 @@ public class InfoPanel extends JPanel {
 
     public void setSwaps(int swaps) {
         swapsLabel.setText("Swaps: " + swaps);
-    }
-
-    public String[] getSwapLogLines() {
-        final String[] lines = swapLog.getText().split("\n");
-        return lines;
-    }
-
-    public void appendLineToSwapLog(String text) {
-        if (!swapLog.getText().isBlank()) {
-            swapLog.append("\n");
-        }
-        swapLog.append(text);
-        swapLog.setCaretPosition(swapLog.getDocument().getLength());
-    }
-
-    public void clearSwapLog() {
-        swapLog.setText("");
     }
 }
