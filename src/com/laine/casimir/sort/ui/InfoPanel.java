@@ -7,8 +7,6 @@ import java.awt.*;
 public class InfoPanel extends JPanel {
 
     private final JLabel sizeLabel = new JLabel();
-    private final JLabel biggestLabel = new JLabel();
-    private final JLabel lowestLabel = new JLabel();
 
     private final JLabel arrayAccessesLabel = new JLabel("Array accesses: -");
     private final JLabel comparisonsLabel = new JLabel("Comparisons: -");
@@ -23,9 +21,8 @@ public class InfoPanel extends JPanel {
             arrayInfoPanel.setLayout(new BoxLayout(arrayInfoPanel, BoxLayout.Y_AXIS));
             arrayInfoPanel.setBorder(new TitledBorder("Array info"));
             arrayInfoPanel.add(sizeLabel);
-            arrayInfoPanel.add(biggestLabel);
-            arrayInfoPanel.add(lowestLabel);
             arrayInfoPanel.add(Box.createHorizontalStrut(0));
+            arrayInfoPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 0));
             add(arrayInfoPanel);
         }
         {
@@ -36,11 +33,10 @@ public class InfoPanel extends JPanel {
             algorithmInfoPanel.add(comparisonsLabel);
             algorithmInfoPanel.add(swapsLabel);
             algorithmInfoPanel.add(Box.createHorizontalStrut(0));
+            algorithmInfoPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 0));
             add(algorithmInfoPanel);
         }
         clearArraySize();
-        clearBiggest();
-        clearLowest();
     }
 
     public void clearArraySize() {
@@ -49,22 +45,6 @@ public class InfoPanel extends JPanel {
 
     public void setArraySize(int size) {
         sizeLabel.setText("Size: " + size);
-    }
-
-    public void clearBiggest() {
-        biggestLabel.setText("Biggest: -");
-    }
-
-    public void setBiggest(int biggest) {
-        biggestLabel.setText("Biggest: " + biggest);
-    }
-
-    public void clearLowest() {
-        lowestLabel.setText("Lowest: -");
-    }
-
-    public void setLowest(int lowest) {
-        lowestLabel.setText("Lowest: " + lowest);
     }
 
     public void setArrayAccesses(int arrayAccesses) {

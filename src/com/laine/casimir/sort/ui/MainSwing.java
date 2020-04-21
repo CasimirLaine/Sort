@@ -58,13 +58,6 @@ public class MainSwing {
                 generationSettings.getUpperBound()
         );
         infoPanel.setArraySize(array.length);
-        if (array.length == 0) {
-            infoPanel.clearBiggest();
-            infoPanel.clearLowest();
-        } else {
-            infoPanel.setBiggest(ArrayUtils.biggest(array));
-            infoPanel.setLowest(ArrayUtils.lowest(array));
-        }
         sortingController.setArray(array);
     }
 
