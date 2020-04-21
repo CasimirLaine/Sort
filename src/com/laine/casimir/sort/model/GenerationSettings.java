@@ -3,7 +3,7 @@ package com.laine.casimir.sort.model;
 public class GenerationSettings {
 
     private int size = 100;
-    private int upperBound = 1_000;
+    private int upperBound = 1_000_000;
     private int lowerBound = 0;
 
     public int getSize() {
