@@ -90,8 +90,4 @@ public class MergeSort extends SortingAlgorithm {
             }
         }
     }
-
-    @Override
-    protected void onStop() {
-    }
 }

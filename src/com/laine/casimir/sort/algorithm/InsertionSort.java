@@ -16,8 +16,4 @@ public class InsertionSort extends SortingAlgorithm {
             }
         }
     }
-
-    @Override
-    protected void onStop() {
-    }
 }

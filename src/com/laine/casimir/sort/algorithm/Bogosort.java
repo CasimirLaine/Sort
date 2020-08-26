@@ -23,10 +23,6 @@ public class Bogosort extends SortingAlgorithm {
         }
     }
 
-    @Override
-    protected void onStop() {
-    }
-
     private void shuffle() {
         for (int index = 0; index < length(); index++) {
             final int newIndex = random.nextInt(length());

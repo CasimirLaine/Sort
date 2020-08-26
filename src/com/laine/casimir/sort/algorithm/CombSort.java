@@ -26,10 +26,6 @@ public class CombSort extends SortingAlgorithm {
         }
     }
 
-    @Override
-    protected void onStop() {
-    }
-
     public void setShrinkFactor(double shrinkFactor) {
         this.shrinkFactor = shrinkFactor;
     }

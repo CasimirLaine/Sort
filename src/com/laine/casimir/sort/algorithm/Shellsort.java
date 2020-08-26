@@ -32,10 +32,6 @@ public class Shellsort extends SortingAlgorithm {
         }
     }
 
-    @Override
-    protected void onStop() {
-    }
-
     public void setInitialGapIndex(int initialGapIndex) {
         this.initialGapIndex = initialGapIndex;
     }

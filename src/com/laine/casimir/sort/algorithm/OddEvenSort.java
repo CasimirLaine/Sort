@@ -19,8 +19,4 @@ public class OddEvenSort extends SortingAlgorithm {
             offset ^= 1;
         }
     }
-
-    @Override
-    protected void onStop() {
-    }
 }

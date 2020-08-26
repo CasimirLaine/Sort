@@ -18,7 +18,7 @@ public abstract class SortingAlgorithm implements Runnable {
 
     protected abstract void onSort();
 
-    protected abstract void onStop();
+    protected void onStop() {};
 
     public final void sort() {
         if (!isArraySet() || length() == 0) {

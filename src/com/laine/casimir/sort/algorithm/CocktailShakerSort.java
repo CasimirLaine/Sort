@@ -27,8 +27,4 @@ public class CocktailShakerSort extends SortingAlgorithm {
             }
         }
     }
-
-    @Override
-    protected void onStop() {
-    }
 }

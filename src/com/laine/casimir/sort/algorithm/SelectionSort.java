@@ -19,8 +19,4 @@ public class SelectionSort extends SortingAlgorithm {
             }
         }
     }
-
-    @Override
-    protected void onStop() {
-    }
 }

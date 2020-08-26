@@ -19,8 +19,4 @@ public class BubbleSort extends SortingAlgorithm {
             sortedTail--;
         }
     }
-
-    @Override
-    protected void onStop() {
-    }
 }
