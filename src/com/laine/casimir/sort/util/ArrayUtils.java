@@ -8,14 +8,6 @@ public final class ArrayUtils {
 
     private ArrayUtils() {}
 
-    public static int[] generateRandomArray(int size) {
-        return generateRandomArray(size, Integer.MAX_VALUE);
-    }
-
-    public static int[] generateRandomArray(int size, int upperBound) {
-        return generateRandomArray(size, 0, upperBound);
-    }
-
     public static int[] generateRandomArray(int size, int lowerBound, int upperBound) {
         final int[] array = new int[size];
         for (int index = 0; index < array.length; index++) {
@@ -26,23 +18,11 @@ public final class ArrayUtils {
 
     public static int biggest(int[] array) {
         int biggest = array[0];
-        for (int index = 0; index < array.length; index++) {
-            final int value = array[index];
+        for (final int value : array) {
             if (value > biggest) {
                 biggest = value;
             }
         }
         return biggest;
-    }
-
-    public static int lowest(int[] array) {
-        int lowest = array[0];
-        for (int index = 0; index < array.length; index++) {
-            final int value = array[index];
-            if (value < lowest) {
-                lowest = value;
-            }
-        }
-        return lowest;
     }
 }

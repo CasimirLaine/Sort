@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-public abstract class SortingSound {
+public abstract class AbstractSortingSound {
 
     public static final String GET = "get";
     public static final String VALIDATE = "validate";
@@ -18,7 +18,7 @@ public abstract class SortingSound {
 
     public final void playSound() {
         synchronized (LOCK) {
-            if (!isAlive()) {
+            if (isDead()) {
                 System.out.println(getClass() + ": Error: Attempting to play sound before creating it!");
                 return;
             }
@@ -73,7 +73,7 @@ public abstract class SortingSound {
         }
     }
 
-    public final boolean isAlive() {
-        return sourceDataLine != null;
+    public final boolean isDead() {
+        return sourceDataLine == null;
     }
 }

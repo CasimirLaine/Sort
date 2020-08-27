@@ -18,8 +18,6 @@ public abstract class SortingAlgorithm implements Runnable {
 
     protected abstract void onSort();
 
-    protected void onStop() {};
-
     public final void sort() {
         if (!isArraySet() || length() == 0) {
             return;
@@ -35,7 +33,6 @@ public abstract class SortingAlgorithm implements Runnable {
 
     public final void stop() {
         sorting = false;
-        onStop();
     }
 
     protected boolean greater(int firstIndex, int secondIndex) {
@@ -58,27 +55,21 @@ public abstract class SortingAlgorithm implements Runnable {
         final int value = array[index];
         iterateSortListeners(SortListener::onArrayAccess);
         highlights.highlight(index, 100);
-        iterateSortListeners(sortListener -> {
-            sortListener.pointersMoved(highlights.getHighlightIndices());
-        });
+        iterateSortListeners(sortListener -> sortListener.pointersMoved(highlights.getHighlightIndices()));
         return value;
     }
 
     protected void set(int index, int value) {
         array[index] = value;
         highlights.highlight(index, 100);
-        iterateSortListeners(sortListener -> {
-            sortListener.pointersMoved(highlights.getHighlightIndices());
-        });
+        iterateSortListeners(sortListener -> sortListener.pointersMoved(highlights.getHighlightIndices()));
     }
 
     protected void swap(int firstIndex, int secondIndex) {
         final int temp = get(firstIndex);
         set(firstIndex, get(secondIndex));
         set(secondIndex, temp);
-        iterateSortListeners(sortListener -> {
-            sortListener.itemsSwapped(firstIndex, secondIndex);
-        });
+        iterateSortListeners(sortListener -> sortListener.itemsSwapped(firstIndex, secondIndex));
     }
 
     protected void startValidationRun() {
@@ -87,23 +78,17 @@ public abstract class SortingAlgorithm implements Runnable {
         final int[] selectedIndices = new int[1];
         for (int index = 0; index < length(); index++) {
             selectedIndices[0] = index;
-            iterateSortListeners(sortListener -> {
-                sortListener.pointersMoved(selectedIndices);
-            });
+            iterateSortListeners(sortListener -> sortListener.pointersMoved(selectedIndices));
             if (index > 0 && greater(index - 1, index)) {
                 break;
             }
             for (int validationIndex = index; validationIndex >= 0; validationIndex--) {
                 validatedIndices[validationIndex] = validationIndex;
             }
-            iterateSortListeners(sortListener -> {
-                sortListener.indicesValidated(validatedIndices);
-            });
+            iterateSortListeners(sortListener -> sortListener.indicesValidated(validatedIndices));
         }
         selectedIndices[0] = -1;
-        iterateSortListeners(sortListener -> {
-            sortListener.pointersMoved(selectedIndices);
-        });
+        iterateSortListeners(sortListener -> sortListener.pointersMoved(selectedIndices));
     }
 
     protected int length() {

@@ -32,9 +32,7 @@ public class MergeSort extends SortingAlgorithm {
                     originalArrayIndex++;
                 }
             }
-            iterateSortListeners(sortListener -> {
-                sortListener.pointersMoved(highlights.getHighlightIndices());
-            });
+            iterateSortListeners(sortListener -> sortListener.pointersMoved(highlights.getHighlightIndices()));
         }
         final int[][] largerArray = createLargerArrays(array);
         assign(array, largerArray);
@@ -67,7 +65,7 @@ public class MergeSort extends SortingAlgorithm {
             int smallStackIndex2 = 0;
             for (int subIndex = 0; subIndex < largeArray.length; subIndex++) {
                 final int smallerValue;
-                if (smallStackIndex1 >= smallStack1.length) {
+                if (smallStack2 != null && smallStackIndex1 >= smallStack1.length) {
                     smallerValue = smallStack2[smallStackIndex2];
                     smallStackIndex2++;
                 } else {

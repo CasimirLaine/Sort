@@ -2,7 +2,7 @@ package com.laine.casimir.sort;
 
 import com.laine.casimir.sort.algorithm.SortingAlgorithm;
 import com.laine.casimir.sort.sound.ArrayAccessSound;
-import com.laine.casimir.sort.sound.SortingSound;
+import com.laine.casimir.sort.sound.AbstractSortingSound;
 import com.laine.casimir.sort.sound.SoundSystem;
 import com.laine.casimir.sort.sound.ValidateSound;
 import com.laine.casimir.sort.ui.SortingPanel;
@@ -25,14 +25,14 @@ public class SortingController implements SortListener {
 
         @Override
         public void pointersMoved(int[] indices) {
-            soundSystem.playSound(SortingSound.GET);
+            soundSystem.playSound(AbstractSortingSound.GET);
             sortingPanel.setSelectedIndices(indices.clone());
             sortingPanel.repaintAndWait();
         }
 
         @Override
         public void indicesValidated(int[] indices) {
-            soundSystem.playSound(SortingSound.VALIDATE);
+            soundSystem.playSound(AbstractSortingSound.VALIDATE);
             sortingPanel.setValidatedIndices(indices.clone());
             sortingPanel.repaintAndWait();
         }
@@ -52,8 +52,8 @@ public class SortingController implements SortListener {
 
     public SortingController(SortingPanel sortingPanel) {
         this.sortingPanel = sortingPanel;
-        soundSystem.mapSound(SortingSound.GET, new ArrayAccessSound());
-        soundSystem.mapSound(SortingSound.VALIDATE, new ValidateSound());
+        soundSystem.mapSound(AbstractSortingSound.GET, new ArrayAccessSound());
+        soundSystem.mapSound(AbstractSortingSound.VALIDATE, new ValidateSound());
     }
 
     public void start(SortingAlgorithm sortingAlgorithm) {

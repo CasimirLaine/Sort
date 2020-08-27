@@ -2,7 +2,7 @@ package com.laine.casimir.sort.sound;
 
 import javax.sound.sampled.SourceDataLine;
 
-public class ArrayAccessSound extends SortingSound {
+public class ArrayAccessSound extends AbstractSortingSound {
 
     private final byte[] soundBuffer = new byte[1];
 

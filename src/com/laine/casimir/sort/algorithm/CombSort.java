@@ -2,7 +2,7 @@ package com.laine.casimir.sort.algorithm;
 
 public class CombSort extends SortingAlgorithm {
 
-    private double shrinkFactor = 1.3;
+    private static final double SHRINK_FACTOR = 1.3;
 
     @Override
     protected void onSort() {
@@ -22,11 +22,7 @@ public class CombSort extends SortingAlgorithm {
             if (gap == 1) {
                 sortedTail--;
             }
-            gap = (int) Math.max(gap / shrinkFactor, 1);
+            gap = (int) Math.max(gap / SHRINK_FACTOR, 1);
         }
-    }
-
-    public void setShrinkFactor(double shrinkFactor) {
-        this.shrinkFactor = shrinkFactor;
     }
 }

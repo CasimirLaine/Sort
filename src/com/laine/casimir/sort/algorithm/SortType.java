@@ -14,7 +14,7 @@ public enum SortType {
     QUICK_SORT("Quicksort")
     ;
 
-    private String title;
+    private final String title;
 
     SortType(String title) {
         this.title = title;
