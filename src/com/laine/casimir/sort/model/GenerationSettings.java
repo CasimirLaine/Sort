@@ -2,9 +2,11 @@ package com.laine.casimir.sort.model;
 
 public class GenerationSettings {
 
-    private int size = 100;
+    private static final int DEFAULT_SIZE = 100;
+
+    private int size = DEFAULT_SIZE;
     private int upperBound = 1_000_000;
-    private int lowerBound = 0;
+    private int lowerBound;
 
     public int getSize() {
         return size;
