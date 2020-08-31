@@ -1,6 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-public class CombSort extends SortingAlgorithm {
+public class CombSort extends AbstractSortingAlgorithm {
 
     private static final double SHRINK_FACTOR = 1.3;
 

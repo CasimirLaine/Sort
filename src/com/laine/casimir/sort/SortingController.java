@@ -1,6 +1,6 @@
 package com.laine.casimir.sort;
 
-import com.laine.casimir.sort.algorithm.SortingAlgorithm;
+import com.laine.casimir.sort.algorithm.AbstractSortingAlgorithm;
 import com.laine.casimir.sort.sound.ArrayAccessSound;
 import com.laine.casimir.sort.sound.AbstractSortingSound;
 import com.laine.casimir.sort.sound.SoundSystem;
@@ -15,7 +15,7 @@ public class SortingController implements SortListener {
 
     private final SoundSystem soundSystem = new SoundSystem();
     private final SortingPanel sortingPanel;
-    private SortingAlgorithm sortingAlgorithm;
+    private AbstractSortingAlgorithm sortingAlgorithm;
     private int[] array;
 
     private final ExecutorService sortingExecutor = Executors.newSingleThreadExecutor();
@@ -56,7 +56,7 @@ public class SortingController implements SortListener {
         soundSystem.mapSound(AbstractSortingSound.VALIDATE, new ValidateSound());
     }
 
-    public void start(SortingAlgorithm sortingAlgorithm) {
+    public void start(AbstractSortingAlgorithm sortingAlgorithm) {
         this.sortingAlgorithm = sortingAlgorithm;
         sortingAlgorithm.setArray(array);
         sortingAlgorithm.addSortListener(sortListener);

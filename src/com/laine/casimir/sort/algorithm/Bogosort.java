@@ -2,7 +2,7 @@ package com.laine.casimir.sort.algorithm;
 
 import java.util.Random;
 
-public class Bogosort extends SortingAlgorithm {
+public class Bogosort extends AbstractSortingAlgorithm {
 
     private final Random random = new Random();
 

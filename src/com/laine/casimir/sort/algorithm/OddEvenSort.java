@@ -1,6 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-public class OddEvenSort extends SortingAlgorithm {
+public class OddEvenSort extends AbstractSortingAlgorithm {
 
     @Override
     protected void onSort() {

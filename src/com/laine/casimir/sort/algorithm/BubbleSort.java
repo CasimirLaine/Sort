@@ -1,6 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-public class BubbleSort extends SortingAlgorithm {
+public class BubbleSort extends AbstractSortingAlgorithm {
 
     @Override
     protected void onSort() {

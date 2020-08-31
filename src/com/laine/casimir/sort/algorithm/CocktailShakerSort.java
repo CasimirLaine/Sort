@@ -1,6 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-public class CocktailShakerSort extends SortingAlgorithm {
+public class CocktailShakerSort extends AbstractSortingAlgorithm {
 
     @Override
     protected void onSort() {

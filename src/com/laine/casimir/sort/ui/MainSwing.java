@@ -3,7 +3,7 @@ package com.laine.casimir.sort.ui;
 import com.laine.casimir.sort.SortListener;
 import com.laine.casimir.sort.SortingController;
 import com.laine.casimir.sort.algorithm.SortType;
-import com.laine.casimir.sort.algorithm.SortingAlgorithm;
+import com.laine.casimir.sort.algorithm.AbstractSortingAlgorithm;
 import com.laine.casimir.sort.model.GenerationSettings;
 import com.laine.casimir.sort.util.ArrayUtils;
 
@@ -41,7 +41,8 @@ public class MainSwing {
         controlPanel.getRefreshDataButton().addActionListener(e -> refreshData());
         controlPanel.getStartSortButton().addActionListener(e -> startSort());
         controlPanel.getStopSortButton().addActionListener(e -> stopSort());
-        controlPanel.getSoundButton().addActionListener(e -> sortingController.setSoundEnabled(controlPanel.getSoundButton().isSelected()));
+        controlPanel.getSoundButton().addActionListener(
+                e -> sortingController.setSoundEnabled(controlPanel.getSoundButton().isSelected()));
         frame.getContentPane().add(infoPanel, BorderLayout.NORTH);
         frame.getContentPane().add(controlPanel, BorderLayout.SOUTH);
         frame.getContentPane().add(sortingPanel, BorderLayout.CENTER);
@@ -67,7 +68,7 @@ public class MainSwing {
         if (selectedItem == null) {
             return;
         }
-        final SortingAlgorithm sortingAlgorithm = SortType.createSortingAlgorithm(selectedItem.toString());
+        final AbstractSortingAlgorithm sortingAlgorithm = SortType.createSortingAlgorithm(selectedItem.toString());
         if (sortingAlgorithm == null) {
             return;
         }

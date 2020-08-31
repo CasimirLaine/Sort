@@ -1,6 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-public class QuickSort extends SortingAlgorithm {
+public class QuickSort extends AbstractSortingAlgorithm {
 
     @Override
     protected void onSort() {

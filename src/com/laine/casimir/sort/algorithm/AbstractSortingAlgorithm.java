@@ -4,8 +4,9 @@ import com.laine.casimir.sort.SortListener;
 import com.laine.casimir.sort.util.ArrayHighlights;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-public abstract class SortingAlgorithm implements Runnable {
+public abstract class AbstractSortingAlgorithm implements Runnable {
 
     private final Queue<SortListenerQueueAction> sortListenerQueueActions = new ArrayDeque<>();
     private final Collection<SortListener> sortListeners = new HashSet<>();
@@ -14,7 +15,7 @@ public abstract class SortingAlgorithm implements Runnable {
 
     private int[] array;
 
-    private boolean sorting = false;
+    private boolean sorting;
 
     protected abstract void onSort();
 
@@ -124,7 +125,7 @@ public abstract class SortingAlgorithm implements Runnable {
         }
     }
 
-    protected void iterateSortListeners(SortListenerAction sortListenerAction) {
+    protected void iterateSortListeners(Consumer<SortListener> sortListenerAction) {
         synchronized (this.sortListeners) {
             synchronized (this.sortListenerQueueActions) {
                 while (!this.sortListenerQueueActions.isEmpty()) {
@@ -137,7 +138,7 @@ public abstract class SortingAlgorithm implements Runnable {
                 }
             }
             for (SortListener sortListener : this.sortListeners) {
-                sortListenerAction.call(sortListener);
+                sortListenerAction.accept(sortListener);
             }
         }
     }
@@ -149,11 +150,6 @@ public abstract class SortingAlgorithm implements Runnable {
 
     public final boolean isSorting() {
         return sorting;
-    }
-
-    @FunctionalInterface
-    public interface SortListenerAction {
-        void call(SortListener sortListener);
     }
 
     public static class SortListenerQueueAction {

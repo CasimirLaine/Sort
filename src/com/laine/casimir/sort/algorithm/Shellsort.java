@@ -1,8 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-import java.util.function.Function;
-
-public class Shellsort extends SortingAlgorithm {
+public class Shellsort extends AbstractSortingAlgorithm {
 
     private static final int INITIAL_GAP_INDEX = 5;
 
@@ -31,7 +29,7 @@ public class Shellsort extends SortingAlgorithm {
         }
     }
 
-    private int calculateConcreteGap(int index) {
+    private static int calculateConcreteGap(int index) {
         return (int) (Math.pow(2, index) - 1);
     }
 }

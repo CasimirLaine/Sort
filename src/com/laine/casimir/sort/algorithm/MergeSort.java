@@ -1,6 +1,6 @@
 package com.laine.casimir.sort.algorithm;
 
-public class MergeSort extends SortingAlgorithm {
+public class MergeSort extends AbstractSortingAlgorithm {
 
     @Override
     protected void onSort() {

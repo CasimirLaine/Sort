@@ -1,53 +1,40 @@
 package com.laine.casimir.sort.algorithm;
 
+import java.lang.reflect.InvocationTargetException;
+
 public enum SortType {
 
-    BUBBLE_SORT("Bubble sort"),
-    BOGOSORT("Bogosort"),
-    INSERTION_SORT("Insertion sort"),
-    SELECTION_SORT("Selection sort"),
-    MERGE_SORT("Merge sort"),
-    SHELLSORT("Shellsort"),
-    COCKTAIL_SHAKER_SORT("Cocktail shaker sort"),
-    ODD_EVENT_SORT("Odd-even sort"),
-    COMB_SORT("Comb sort"),
-    QUICK_SORT("Quicksort")
-    ;
+    BUBBLE_SORT("Bubble sort", BubbleSort.class),
+    BOGOSORT("Bogosort", Bogosort.class),
+    INSERTION_SORT("Insertion sort", InsertionSort.class),
+    SELECTION_SORT("Selection sort", SelectionSort.class),
+    MERGE_SORT("Merge sort", MergeSort.class),
+    SHELLSORT("Shellsort", Shellsort.class),
+    COCKTAIL_SHAKER_SORT("Cocktail shaker sort", CocktailShakerSort.class),
+    ODD_EVENT_SORT("Odd-even sort", OddEvenSort.class),
+    COMB_SORT("Comb sort", CombSort.class),
+    QUICK_SORT("Quicksort", QuickSort.class);
 
     private final String title;
+    private final Class<? extends AbstractSortingAlgorithm> type;
 
-    SortType(String title) {
+    SortType(String title, Class<? extends AbstractSortingAlgorithm> type) {
         this.title = title;
+        this.type = type;
     }
 
-    public SortingAlgorithm createSortingAlgorithm() {
-        switch (this) {
-            case BUBBLE_SORT:
-                return new BubbleSort();
-            case BOGOSORT:
-                return new Bogosort();
-            case INSERTION_SORT:
-                return new InsertionSort();
-            case SELECTION_SORT:
-                return new SelectionSort();
-            case MERGE_SORT:
-                return new MergeSort();
-            case SHELLSORT:
-                return new Shellsort();
-            case COCKTAIL_SHAKER_SORT:
-                return new CocktailShakerSort();
-            case ODD_EVENT_SORT:
-                return new OddEvenSort();
-            case COMB_SORT:
-                return new CombSort();
-            case QUICK_SORT:
-                return new QuickSort();
-            default:
-                return null;
+    public AbstractSortingAlgorithm createSortingAlgorithm() {
+        if (type != null) {
+            try {
+                return type.getConstructor().newInstance();
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                e.printStackTrace();
+            }
         }
+        return null;
     }
 
-    public static SortingAlgorithm createSortingAlgorithm(String key) {
+    public static AbstractSortingAlgorithm createSortingAlgorithm(String key) {
         for (SortType sortType : values()) {
             if (sortType.getTitle().equals(key)) {
                 return sortType.createSortingAlgorithm();
