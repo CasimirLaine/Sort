@@ -27,7 +27,8 @@ public enum SortType {
         if (type != null) {
             try {
                 return type.getConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+                    | NoSuchMethodException e) {
                 e.printStackTrace();
             }
         }

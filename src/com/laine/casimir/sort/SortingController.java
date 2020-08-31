@@ -88,7 +88,7 @@ public class SortingController implements SortListener {
         if (sortingTask != null && !sortingTask.isDone() && !sortingTask.isCancelled()) {
             return;
         }
-        this.array = array;
+        this.array = array.clone();
         sortingPanel.setArray(array);
     }
 }

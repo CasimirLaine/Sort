@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 public class SortingPanel extends JComponent {
 
-    private final transient Object RENDER_LOCK = new Object();
+    private final transient Object renderLock = new Object();
 
     private final Stroke stroke = new BasicStroke(1);
 
@@ -40,13 +40,13 @@ public class SortingPanel extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        synchronized (RENDER_LOCK) {
+        synchronized (renderLock) {
             final Graphics2D g2d = (Graphics2D) g;
             g2d.setStroke(stroke);
             g2d.setColor(Color.BLACK);
             g2d.fillRect(0, 0, getWidth(), getHeight());
             if (array == null || array.length == 0) {
-                RENDER_LOCK.notifyAll();
+                renderLock.notifyAll();
                 return;
             }
             g2d.setColor(Color.WHITE);
@@ -91,16 +91,16 @@ public class SortingPanel extends JComponent {
                 g2d.drawRect(x, getHeight() - height, width, height);
                 x += width;
             }
-            RENDER_LOCK.notifyAll();
+            renderLock.notifyAll();
         }
     }
 
     public void repaintAndWait() {
-        synchronized (RENDER_LOCK) {
+        synchronized (renderLock) {
             repaint();
             if (!SwingUtilities.isEventDispatchThread()) {
                 try {
-                    RENDER_LOCK.wait();
+                    renderLock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
