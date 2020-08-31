@@ -4,9 +4,8 @@ public class CocktailShakerSort extends SortingAlgorithm {
 
     @Override
     protected void onSort() {
-        int startIndex = 0;
         int endIndex = length();
-        while (true) {
+        for (int startIndex = 0; startIndex != length(); startIndex++) {
             for (int index = startIndex; index < endIndex - 1; index++) {
                 if (greater(index, index + 1)) {
                     swap(index + 1, index);
@@ -20,10 +19,6 @@ public class CocktailShakerSort extends SortingAlgorithm {
                 if (greater(index, index + 1)) {
                     swap(index + 1, index);
                 }
-            }
-            startIndex++;
-            if (startIndex == length()) {
-                break;
             }
         }
     }
