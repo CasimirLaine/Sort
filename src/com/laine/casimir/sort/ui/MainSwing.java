@@ -2,28 +2,20 @@ package com.laine.casimir.sort.ui;
 
 import com.laine.casimir.sort.SortListener;
 import com.laine.casimir.sort.SortingController;
-import com.laine.casimir.sort.algorithm.SortType;
 import com.laine.casimir.sort.algorithm.AbstractSortingAlgorithm;
+import com.laine.casimir.sort.algorithm.SortType;
 import com.laine.casimir.sort.model.GenerationSettings;
 import com.laine.casimir.sort.util.ArrayUtils;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
-
-public class MainSwing {
+public final class MainSwing {
 
     private static final int DEFAULT_WINDOW_WIDTH = 500;
     private static final int DEFAULT_WINDOW_HEIGHT = 500;
 
     private final GenerationSettings generationSettings = new GenerationSettings();
-
-    private final JFrame frame = new JFrame();
 
     private final InfoPanel infoPanel = new InfoPanel();
     private final ControlPanel controlPanel = new ControlPanel(generationSettings);
@@ -32,6 +24,7 @@ public class MainSwing {
     private final SortingController sortingController = new SortingController(sortingPanel);
 
     public MainSwing() {
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Sort");
         frame.getContentPane().setLayout(new BorderLayout());
@@ -53,8 +46,8 @@ public class MainSwing {
     public void refreshData() {
         final int[] array = ArrayUtils.generateRandomArray(
                 generationSettings.getSize(),
-                generationSettings.getLowerBound(),
-                generationSettings.getUpperBound()
+                GenerationSettings.LOWER_BOUND,
+                GenerationSettings.UPPER_BOUND
         );
         infoPanel.setArraySize(array.length);
         sortingController.setArray(array);
