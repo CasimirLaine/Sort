@@ -3,24 +3,14 @@ package com.laine.casimir.sort.ui;
 import com.laine.casimir.sort.algorithm.SortType;
 import com.laine.casimir.sort.model.GenerationSettings;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import javax.swing.*;
+import javax.swing.plaf.metal.MetalToggleButtonUI;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.function.Supplier;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JToggleButton;
-import javax.swing.plaf.metal.MetalToggleButtonUI;
 
 public class ControlPanel extends JPanel {
 

@@ -24,16 +24,14 @@ public class MergeSort extends AbstractSortingAlgorithm {
         if (array.length == 1) {
             return array[0];
         }
-        {
-            int originalArrayIndex = 0;
-            for (int[] nestedArray : array) {
-                for (int value : nestedArray) {
-                    set(originalArrayIndex, value);
-                    originalArrayIndex++;
-                }
+        int originalArrayIndex = 0;
+        for (int[] nestedArray : array) {
+            for (int value : nestedArray) {
+                set(originalArrayIndex, value);
+                originalArrayIndex++;
             }
-            iterateSortListeners(sortListener -> sortListener.pointersMoved(highlights.getHighlightIndices()));
         }
+        iterateSortListeners(sortListener -> sortListener.pointersMoved(highlights.getHighlightIndices()));
         final int[][] largerArray = createLargerArrays(array);
         assign(array, largerArray);
         return merge(largerArray);
