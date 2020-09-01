@@ -3,18 +3,25 @@ package com.laine.casimir.sort.ui;
 import com.laine.casimir.sort.util.ArrayUtils;
 import com.laine.casimir.sort.util.MathUtils;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
-
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
+import java.util.Map;
 
 public class SortingPanel extends JComponent {
+
+    private static final RenderingHints RENDERING_HINTS = new RenderingHints(Map.of(
+            RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON,
+            RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON,
+            RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
+            RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
+            RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE,
+            RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON,
+            RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC,
+            RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY,
+            RenderingHints.KEY_RESOLUTION_VARIANT, RenderingHints.VALUE_RESOLUTION_VARIANT_SIZE_FIT,
+            RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE
+    ));
 
     private final transient Object renderLock = new Object();
 
@@ -42,6 +49,7 @@ public class SortingPanel extends JComponent {
         super.paintComponent(g);
         synchronized (renderLock) {
             final Graphics2D g2d = (Graphics2D) g;
+            g2d.addRenderingHints(RENDERING_HINTS);
             g2d.setStroke(stroke);
             g2d.setColor(Color.BLACK);
             g2d.fillRect(0, 0, getWidth(), getHeight());
