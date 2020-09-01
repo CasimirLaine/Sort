@@ -44,10 +44,20 @@ public final class SoundSystem {
         }
     }
 
+    public void createAllSounds() {
+        for (Map.Entry<String, AbstractSortingSound> soundEntry : soundMap.entrySet()) {
+            final AbstractSortingSound sortingSound = soundEntry.getValue();
+            if (sortingSound.isDead()) {
+                sortingSound.createSound();
+            }
+        }
+    }
+
     public void stopAllSounds() {
         for (Map.Entry<String, AbstractSortingSound> soundEntry : soundMap.entrySet()) {
             final AbstractSortingSound sortingSound = soundEntry.getValue();
             sortingSound.stopSound();
+            sortingSound.destroySound();
         }
         for (Map.Entry<String, Future<?>> taskEntry : soundTasks.entrySet()) {
             final Future<?> task = taskEntry.getValue();
@@ -59,16 +69,10 @@ public final class SoundSystem {
 
     public void setSoundEnabled(boolean soundEnabled) {
         this.soundEnabled = soundEnabled;
-        if (!soundEnabled) {
+        if (soundEnabled) {
+            createAllSounds();
+        } else {
             stopAllSounds();
-        }
-        for (Map.Entry<String, AbstractSortingSound> soundEntry : soundMap.entrySet()) {
-            final AbstractSortingSound sortingSound = soundEntry.getValue();
-            if (!soundEnabled) {
-                sortingSound.destroySound();
-            } else if (sortingSound.isDead()) {
-                sortingSound.createSound();
-            }
         }
     }
 }

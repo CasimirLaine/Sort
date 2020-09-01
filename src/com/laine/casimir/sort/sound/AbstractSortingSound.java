@@ -12,27 +12,25 @@ public abstract class AbstractSortingSound {
 
     protected static final double KILOHERTZ = 44.1;
 
-    private final Object LOCK = new Object();
+    private final Object lock = new Object();
 
     private SourceDataLine sourceDataLine;
 
     public final void playSound() {
-        synchronized (LOCK) {
+        synchronized (lock) {
             if (isDead()) {
                 System.out.println(getClass() + ": Error: Attempting to play sound before creating it!");
                 return;
             }
-            if (sourceDataLine != null) {
-                play(sourceDataLine);
-                stopSound();
-            }
+            play(sourceDataLine);
+            stopSound();
         }
     }
 
     protected abstract void play(SourceDataLine sourceDataLine);
 
     public final void stopSound() {
-        synchronized (LOCK) {
+        synchronized (lock) {
             if (sourceDataLine != null) {
                 sourceDataLine.drain();
                 sourceDataLine.flush();
@@ -41,7 +39,7 @@ public abstract class AbstractSortingSound {
     }
 
     public final void createSound() {
-        synchronized (LOCK) {
+        synchronized (lock) {
             destroySound();
             final AudioFormat audioFormat = new AudioFormat(
                     AudioFormat.Encoding.PCM_SIGNED,
@@ -63,7 +61,7 @@ public abstract class AbstractSortingSound {
     }
 
     public final void destroySound() {
-        synchronized (LOCK) {
+        synchronized (lock) {
             stopSound();
             if (sourceDataLine != null) {
                 sourceDataLine.stop();

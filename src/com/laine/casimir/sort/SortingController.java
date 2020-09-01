@@ -64,6 +64,7 @@ public class SortingController implements SortListener {
         if (sortingTask == null || sortingTask.isDone() || sortingTask.isCancelled()) {
             sortingTask = sortingExecutor.submit(sortingAlgorithm);
         }
+        soundSystem.createAllSounds();
     }
 
     public void stop() {
