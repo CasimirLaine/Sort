@@ -17,9 +17,9 @@ public final class MathUtils {
         return mod;
     }
 
-    public static double getSkipModulo(int length, int widthAvailable) {
-        final double requiredOmissions = Math.max(length - widthAvailable, 0);
-        if (requiredOmissions == 0) {
+    public static double getSkipModulo(int length, double widthAvailable) {
+        final double requiredOmissions = length - widthAvailable;
+        if (requiredOmissions <= 0) {
             return 0;
         }
         return (double) length / requiredOmissions;
